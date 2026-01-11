@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郭祥振 - 个人主页</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* 主容器 */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            padding: 40px 50px;
+            margin: 40px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ========== 第一部分：头部信息 (左文右图) ========== */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 30px;
+        }
+
+        .header-info {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .header-info h1 {
+            font-size: 2.8em;
+            margin: 0 0 10px 0;
+            color: #111;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-info h1 span {
+             font-weight: 300;
+             color: #666;
+             font-size: 0.5em;
+             margin-left: 10px;
+             vertical-align: middle;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #555;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .contact-info p {
+            margin: 8px 0;
+            color: #666;
+            font-size: 1.05em;
+        }
+
+        .contact-info a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .header-avatar {
+            width: 320px; 
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .avatar-img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            object-fit: cover;
+        }
+        
+        @media (max-width: 850px) {
+            .header-section {
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+            }
+            .header-info {
+                padding-right: 0;
+                margin-top: 25px;
+            }
+            .header-avatar {
+                width: 200px;
+                text-align: center;
+            }
+        }
+
+        /* ========== 内容样式 ========== */
+        .content-section {
+            margin-bottom: 45px;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+
+        ul {
+            padding-left: 20px;
+            font-size: 1.05em;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* ========== 视频项目卡片样式 (新增) ========== */
+        .video-item {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .video-info {
+            margin-bottom: 15px;
+        }
+
+        .video-info strong {
+            font-size: 1.2em;
+            color: #0066cc;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .video-info em {
+            font-style: normal;
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* 视频容器 */
+        .video-wrapper {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            max-height: 500px; /* 防止视频过高 */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="header-section">
+            <div class="header-info">
+                <h1>郭祥振 <span>Guo Xiangzhen</span></h1>
+                <div class="subtitle">专注于 3D 场景重建 | 自动驾驶 </div>
+                
+                <div class="contact-info">
+                    <p><strong>东北大学 (985)</strong> | 二年级硕士研究生</p>
+                    <p><strong>导师：</strong><a href="http://faculty.neu.edu.cn/ise/zhangyunzhou" target="_blank">张云洲 教授</a></p>
+                    <p><strong>邮箱：</strong>2429312850@qq.com</p>
+                    <p><strong>GitHub：</strong><a href="https://github.com/ldexuan" target="_blank">github.com/ldexuan</a></p>
+                </div>
+            </div>
+
+            <div class="header-avatar">
+                <img src="./imgs/gxz.jpg" alt="郭祥振" class="avatar-img">
+            </div>
+        </header>
+
+        <section class="content-section">
+            <div class="section-title">个人简介 (Biography)</div>
+            <p>
+                我是郭祥振。本科毕业于东北大学测控技术与仪器专业，目前在东北大学攻读控制科学与工程硕士学位。
+            </p>
+            <p>
+                我的研究兴趣主要集中在 <strong>3D 计算机视觉</strong> 和 <strong>自动驾驶算法</strong>。
+                具体来说，我致力于利用 <strong>3D Gaussian Splatting</strong>技术进行高质量的场景重建，
+                并探索如何将这些环境表征应用于 <strong>自动驾驶</strong> 和 <strong>机器人导航</strong> 中，使机器人能够像人类一样理解并与复杂的物理世界交互。
+            </p>
+            <p>
+                近期，我也在探索 <strong>端到端自动驾驶</strong> 中的世界模型与 VLA (Vision-Language-Action) 算法。
+            </p>
+        </section>
+
+        <!-- <section class="content-section">
+            <div class="section-title">最新动态 (News)</div>
+            <ul>
+                <li>
+                    <strong>[2026.01]</strong> 
+                    论文 <strong>"Velo-GS: Velocity-Modulated Gaussian Evolution for Dynamic Urban Reconstruction"</strong> 
+                    作为<strong>第一作者</strong>投稿至机器学习顶级会议 <strong>ICML 2026</strong> (CCF-A)。
+                </li>
+                
+                <li>
+                    <strong>[2025.11]</strong> 
+                    完成 <strong>VLA (Vision-Language-Action)</strong> 自动驾驶大模型实践：基于 <strong>Qwen2.5-VL</strong> 在 nuScenes 数据集上的指令微调 (SFT) 与验证。
+                </li>
+            </ul>
+        </section> -->
+
+        <section class="content-section">
+            <div class="section-title">项目展示 (Project Demos)</div>
+
+            <div class="video-item">
+                <div class="video-info">
+                    <strong>MinuteMind: Gaussian-Based Minute-Level Scene Understanding</strong>
+                    <em>ICRA 2026 (Paper Demo)</em>
+                    <p>
+                        提出了一种基于 3DGS 用于开放词汇 3D 场景理解的框架，减少了 51% 的内存占用，语义重建过程加速了 27 倍，提高了几何重建的精度，并为高斯点云分配准确的语义属性。
+                    </p>
+                </div>
+                <div class="video-wrapper">
+                    <video controls preload="metadata" poster="./imgs/icml.png">
+                        <source src="./video/gxz_icra.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+            </div>
+            <div class="video-item">
+                <div class="video-info">
+                    <!-- <strong>
+                        <a href="https://github.com/ldexuan/Mini_VLA" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer;">
+                            基于 Qwen2.5-VL 的自动驾驶 VLA 模型实践 🔗
+                        </a>
+                    </strong> -->
+                    <strong>基于 Qwen2.5-VL 的自动驾驶 VLA 模型实践</strong>
+                    
+                    <em>Self-study Project: End-to-End AD with VLM</em>
+                    <p>
+                        这是一个探索Vision-Language-Action (VLA)在自动驾驶中应用的实践项目。我利用nuScenes数据集构建了驾驶场景问答对 (QA Pairs)，并使用LLaMA Factory框架对Qwen2.5-VL-3B多模态大模型进行了lora微调。视频展示了微调后的模型对复杂交通场景的理解与推理能力。
+                        <br>
+                        <!-- <span style="font-size: 0.9em;">
+                            [ Code: <a href="https://github.com/ldexuan/Mini_VLA" target="_blank" style="color: #0066cc;">https://github.com/ldexuan/Mini_VLA</a> ]
+                        </span> -->
+                    </p>
+                </div>
+                <div class="video-wrapper">
+                    <video controls preload="metadata" poster="./imgs/vla.jpg">
+                        <source src="./video/vla.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+            </div>
+            <div class="video-item">
+                <div class="video-info">
+                    <strong>四足机器人巡迹与动态控制</strong>
+                    <em>机器人大赛(RoboCom) 国家一等奖项目展示</em>
+                    <p>
+                        该项目展示了我们在四足机器人上的运动控制、速度规划及其巡迹算法。
+                    </p>
+                </div>
+                <div class="video-wrapper">
+                    <video controls preload="metadata" poster="./imgs/robocom.jpg">
+                        <source src="./video/robocom_1.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="content-section">
+            <div class="section-title">获奖荣誉 (Honors & Awards)</div>
+            <ul>
+                <li><strong>2024, 2025:</strong> 东北大学优秀研究生一等奖学金</li>
+                <li><strong>2021:</strong> 高教杯先进成图技术与技能创新大赛 - 国家二等奖</li>
+                <li><strong>2023:</strong> 机器人开发者大赛 (RoboCom) - 国家一等奖</li>
+                <li><strong>2021-2024:</strong> 哈尔滨理工大学大学优秀学生一等奖学金 (连续三年)</li>
+            </ul>
+        </section>
+
+    </div>
+
+</body>
+</html>
