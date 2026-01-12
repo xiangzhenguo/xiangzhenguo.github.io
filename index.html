@@ -182,7 +182,81 @@
             max-height: 500px; /* 防止视频过高 */
         }
 
+        /* 3D Viewer 容器 */
+        .viewer-wrapper {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        #ply-viewer {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .viewer-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            z-index: 10;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 20;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 黑体字体样式 */
+        .heiti {
+            font-family: "Microsoft YaHei", "SimHei", "黑体", sans-serif;
+            font-weight: bold;
+        }
+
     </style>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -214,28 +288,12 @@
             <p>
                 我的研究兴趣主要集中在 <strong>3D 计算机视觉</strong> 和 <strong>自动驾驶算法</strong>。
                 具体来说，我致力于利用 <strong>3D Gaussian Splatting</strong>技术进行高质量的场景重建，
-                并探索如何将这些环境表征应用于 <strong>自动驾驶</strong> 和 <strong>机器人导航</strong> 中，使机器人能够像人类一样理解并与复杂的物理世界交互。
+                并探索如何将这些环境表征应用于 <strong>自动驾驶</strong> 和 <strong>机器人仿真</strong> 中，使机器人能够像人类一样理解并与复杂的物理世界交互。
             </p>
             <p>
                 近期，我也在探索 <strong>端到端自动驾驶</strong> 中的世界模型与 VLA (Vision-Language-Action) 算法。
             </p>
         </section>
-
-        <!-- <section class="content-section">
-            <div class="section-title">最新动态 (News)</div>
-            <ul>
-                <li>
-                    <strong>[2026.01]</strong> 
-                    论文 <strong>"Velo-GS: Velocity-Modulated Gaussian Evolution for Dynamic Urban Reconstruction"</strong> 
-                    作为<strong>第一作者</strong>投稿至机器学习顶级会议 <strong>ICML 2026</strong> (CCF-A)。
-                </li>
-                
-                <li>
-                    <strong>[2025.11]</strong> 
-                    完成 <strong>VLA (Vision-Language-Action)</strong> 自动驾驶大模型实践：基于 <strong>Qwen2.5-VL</strong> 在 nuScenes 数据集上的指令微调 (SFT) 与验证。
-                </li>
-            </ul>
-        </section> -->
 
         <section class="content-section">
             <div class="section-title">项目展示 (Project Demos)</div>
@@ -245,7 +303,7 @@
                     <strong>MinuteMind: Gaussian-Based Minute-Level Scene Understanding</strong>
                     <em>ICRA 2026 (Paper Demo)</em>
                     <p>
-                        提出了一种基于 3DGS 用于开放词汇 3D 场景理解的框架，减少了 51% 的内存占用，语义重建过程加速了 27 倍，提高了几何重建的精度，并为高斯点云分配准确的语义属性。
+                        提出了一种基于 3DGS 用于开放词汇 3D 场景理解的框架，减少了 <span class="heiti">51%</span> 的内存占用，语义重建过程加速了 <span class="heiti">27</span> 倍，提高了几何重建的精度，并为高斯点云分配准确的<span class="heiti">语义属性</span>。
                     </p>
                 </div>
                 <div class="video-wrapper">
@@ -281,21 +339,46 @@
                 </div>
             </div>
             
-            <!-- <div class="video-item">
+            <div class="video-item">
                 <div class="video-info">
-                    <strong>四足机器人巡迹与动态控制</strong>
-                    <em>机器人大赛(RoboCom) 国家一等奖项目展示</em>
+                    <strong>面向复杂桌面的物体级语义建模</strong>
+                    <em>东北大学本科优秀毕业设计</em>
                     <p>
-                        该项目展示了我们在四足机器人上的运动控制、速度规划及其巡迹算法。
+                        结合 ORB-SLAM 和 YOLO 检测，引入数据关联和物体参数化策略，构建<span class="heiti">物体层级的语义感知系统</span>。
                     </p>
                 </div>
                 <div class="video-wrapper">
-                    <video controls preload="metadata" poster="./imgs/robocom.jpg">
-                        <source src="./video/robocom_1.mp4" type="video/mp4">
+                    <video controls preload="metadata" poster="./imgs/EAO.png">
+                        <source src="./video/EAO.mp4" type="video/mp4">
                         您的浏览器不支持视频播放。
                     </video>
                 </div>
-            </div> -->
+            </div>
+
+
+            <div class="video-item">
+                <div class="video-info">
+                    <strong>高沉浸感虚实融合态势可视化系统</strong>
+                    <em>*** 设计研究院、*** 仿真中心</em>
+                    <p>
+                        基于上述《面向复杂桌面的物体级语义建模》的研究，实现物体级的场景理解。
+                        采用 <span class="heiti">3DGS</span> 做为场景表达，使用体素分割场景，并在体素中存储几何与外观信息，通过 MLP 网络解码生成面元。在重建场景中<span class="heiti">仿真双目渲染图像</span>，利用DLNR模型估计深度图，之后通过 TSDF 和 Marching Cubes 获得 mesh。
+                        在 Unity 中，虚拟物体可以与重建场景中的物体进行交互，可以通过<span class="heiti">语言</span>等形式控制虚拟物体发生动作，最终结果展示在 Rokid 眼镜上实现 AR 效果。
+                    </p>
+                </div>
+                <div class="viewer-wrapper">
+                    <div class="loading-overlay" id="loading-overlay">
+                        <div class="loading-spinner"></div>
+                        <div id="loading-text">正在加载 3D 模型...</div>
+                        <div id="loading-progress" style="margin-top: 10px; font-size: 0.9em;"></div>
+                    </div>
+                    <div class="viewer-controls" style="display: none;" id="viewer-controls">
+                        <div>🖱️ 左键拖动旋转 | 🔍 滚轮缩放 | 右键拖动平移</div>
+                    </div>
+                    <canvas id="ply-viewer"></canvas>
+                </div>
+            </div>
+
 
         </section>
 
@@ -311,6 +394,176 @@
         </section>
 
     </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { PLYLoader } from 'three/addons/loaders/PLYLoader.js';
+
+        // 获取DOM元素
+        const canvas = document.getElementById('ply-viewer');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const loadingText = document.getElementById('loading-text');
+        const loadingProgress = document.getElementById('loading-progress');
+        const viewerControls = document.getElementById('viewer-controls');
+
+        // 初始化场景
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x404040);
+
+        // 设置相机
+        const camera = new THREE.PerspectiveCamera(
+            60,
+            canvas.parentElement.clientWidth / canvas.parentElement.clientHeight,
+            0.1,
+            2000
+        );
+        camera.position.set(10, 10, 10);
+
+        // 设置渲染器
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: true
+        });
+        renderer.setSize(canvas.parentElement.clientWidth, canvas.parentElement.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // 添加轨道控制器
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 0.5;
+        controls.maxDistance = 100;
+        controls.autoRotate = false;
+
+        // 移除角度限制，允许自由旋转
+        controls.minPolarAngle = 0; // 垂直旋转最小角度
+        controls.maxPolarAngle = Math.PI; // 垂直旋转最大角度
+        controls.enablePan = true; // 允许平移（右键拖动）
+
+        // 添加更强的光照 - 提高亮度
+        const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
+        scene.add(ambientLight);
+
+        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 2.0);
+        directionalLight1.position.set(20, 20, 20);
+        scene.add(directionalLight1);
+
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+        directionalLight2.position.set(-20, 10, -20);
+        scene.add(directionalLight2);
+
+        const directionalLight3 = new THREE.DirectionalLight(0xffffff, 1.2);
+        directionalLight3.position.set(0, -20, 0);
+        scene.add(directionalLight3);
+
+        // 添加网格辅助线（可选，用于调试）
+        const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
+        scene.add(gridHelper);
+
+        console.log('开始加载 PLY 文件...');
+
+        // 加载 PLY 文件
+        const loader = new PLYLoader();
+        loader.load(
+            './ply/shapan.ply',
+            function (geometry) {
+                console.log('PLY 文件加载成功！');
+                loadingText.textContent = '处理模型数据...';
+
+                // 使用 setTimeout 让UI有时间更新
+                setTimeout(() => {
+                    try {
+                        geometry.computeVertexNormals();
+                        console.log('顶点数:', geometry.attributes.position.count);
+
+                        // 创建材质 - 使用更亮的材质
+                        const material = new THREE.MeshPhongMaterial({
+                            color: 0xf0f0f0,
+                            flatShading: false,
+                            side: THREE.DoubleSide,
+                            shininess: 50,
+                            emissive: 0x211111  // 添加自发光
+                        });
+
+                        // 如果 PLY 文件包含颜色信息，使用顶点颜色
+                        if (geometry.attributes.color) {
+                            material.vertexColors = true;
+                            console.log('使用顶点颜色');
+                        }
+
+                        // 创建网格
+                        const mesh = new THREE.Mesh(geometry, material);
+
+                        // 居中模型
+                        geometry.computeBoundingBox();
+                        const boundingBox = geometry.boundingBox;
+                        const center = new THREE.Vector3();
+                        boundingBox.getCenter(center);
+                        mesh.position.sub(center);
+
+                        scene.add(mesh);
+                        console.log('模型已添加到场景');
+
+                        // 调整相机位置以适应模型
+                        const size = boundingBox.getSize(new THREE.Vector3());
+                        const maxDim = Math.max(size.x, size.y, size.z);
+                        const fov = camera.fov * (Math.PI / 180);
+                        let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                        cameraZ *= 1.5; // 稍微远一点
+
+                        camera.position.set(cameraZ, cameraZ * 0.8, cameraZ);
+                        camera.lookAt(0, 0, 0);
+                        controls.target.set(0, 0, 0);
+                        controls.update();
+
+                        console.log('模型尺寸:', size);
+                        console.log('相机位置:', camera.position);
+
+                        // 隐藏加载提示，显示控制提示
+                        loadingOverlay.style.display = 'none';
+                        viewerControls.style.display = 'block';
+
+                        // 移除网格辅助线
+                        scene.remove(gridHelper);
+
+                    } catch (error) {
+                        console.error('处理模型时出错:', error);
+                        loadingText.textContent = '处理模型失败';
+                        loadingProgress.textContent = error.message;
+                    }
+                }, 100);
+            },
+            function (xhr) {
+                const percentComplete = xhr.total > 0 ? (xhr.loaded / xhr.total * 100) : 0;
+                loadingProgress.textContent = `已加载: ${(xhr.loaded / 1024 / 1024).toFixed(1)} MB / ${(xhr.total / 1024 / 1024).toFixed(1)} MB (${Math.round(percentComplete)}%)`;
+                console.log(`加载进度: ${percentComplete.toFixed(2)}%`);
+            },
+            function (error) {
+                console.error('加载 PLY 文件时出错:', error);
+                loadingText.textContent = '加载失败！';
+                loadingProgress.textContent = '无法加载 ./ply/shapan.ply';
+                loadingProgress.innerHTML += '<br>请检查文件路径是否正确';
+            }
+        );
+
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 窗口大小调整
+        window.addEventListener('resize', () => {
+            const width = canvas.parentElement.clientWidth;
+            const height = canvas.parentElement.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+    </script>
 
 </body>
 </html>
