@@ -193,6 +193,55 @@
             position: relative;
         }
 
+        /* 封面样式 */
+        .viewer-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #000;
+            z-index: 30;
+            transition: opacity 0.3s ease;
+        }
+
+        .viewer-cover:hover {
+            opacity: 0.95;
+        }
+
+        .viewer-cover img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .viewer-cover .play-button {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: #333;
+            transition: transform 0.2s ease;
+        }
+
+        .viewer-cover:hover .play-button {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .viewer-cover.hidden {
+            display: none;
+        }
+
         #ply-viewer {
             width: 100%;
             height: 100%;
@@ -286,7 +335,7 @@
                 我是郭祥振。本科毕业于东北大学测控技术与仪器专业，目前在东北大学攻读控制科学与工程硕士学位。
             </p>
             <p>
-                我的研究兴趣主要集中在 <strong>3D 计算机视觉</strong> 和 <strong>自动驾驶算法</strong>。
+                我的研究兴趣主要集中在 <strong>3D 计算机视觉</strong> 和 <strong>场景感知算法</strong>。
                 具体来说，我致力于利用 <strong>3D Gaussian Splatting</strong>技术进行高质量的场景重建，
                 并探索如何将这些环境表征应用于 <strong>自动驾驶</strong> 和 <strong>机器人仿真</strong> 中，使机器人能够像人类一样理解并与复杂的物理世界交互。
             </p>
@@ -366,8 +415,15 @@
                         在 Unity 中，虚拟物体可以与重建场景中的物体进行交互，可以通过<span class="heiti">语言</span>等形式控制虚拟物体发生动作，最终结果展示在 Rokid 眼镜上实现 AR 效果。
                     </p>
                 </div>
+                
                 <div class="viewer-wrapper">
-                    <div class="loading-overlay" id="loading-overlay">
+                    <!-- 封面 -->
+                    <div class="viewer-cover" id="viewer-cover">
+                        <img src="./imgs/shapan.png" alt="3D模型封面">
+                        <div class="play-button">▶</div>
+                    </div>
+
+                    <div class="loading-overlay" id="loading-overlay" style="display: none;">
                         <div class="loading-spinner"></div>
                         <div id="loading-text">正在加载 3D 模型...</div>
                         <div id="loading-progress" style="margin-top: 10px; font-size: 0.9em;"></div>
@@ -377,6 +433,8 @@
                     </div>
                     <canvas id="ply-viewer"></canvas>
                 </div>
+
+
             </div>
 
 
@@ -406,6 +464,7 @@
         const loadingText = document.getElementById('loading-text');
         const loadingProgress = document.getElementById('loading-progress');
         const viewerControls = document.getElementById('viewer-controls');
+        const viewerCover = document.getElementById('viewer-cover');
 
         // 初始化场景
         const scene = new THREE.Scene();
@@ -461,91 +520,110 @@
         const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
         scene.add(gridHelper);
 
-        console.log('开始加载 PLY 文件...');
+        // 是否已加载模型
+        let modelLoaded = false;
 
-        // 加载 PLY 文件
-        const loader = new PLYLoader();
-        loader.load(
-            './ply/shapan.ply',
-            function (geometry) {
-                console.log('PLY 文件加载成功！');
-                loadingText.textContent = '处理模型数据...';
+        // 加载模型函数
+        function loadModel() {
+            if (modelLoaded) return;
+            modelLoaded = true;
 
-                // 使用 setTimeout 让UI有时间更新
-                setTimeout(() => {
-                    try {
-                        geometry.computeVertexNormals();
-                        console.log('顶点数:', geometry.attributes.position.count);
+            console.log('开始加载 PLY 文件...');
 
-                        // 创建材质 - 使用更亮的材质
-                        const material = new THREE.MeshPhongMaterial({
-                            color: 0xf0f0f0,
-                            flatShading: false,
-                            side: THREE.DoubleSide,
-                            shininess: 50,
-                            emissive: 0x211111  // 添加自发光
-                        });
+            // 加载 PLY 文件
+            const loader = new PLYLoader();
+            loader.load(
+                './ply/shapan.ply',
+                function (geometry) {
+                    console.log('PLY 文件加载成功！');
+                    loadingText.textContent = '处理模型数据...';
 
-                        // 如果 PLY 文件包含颜色信息，使用顶点颜色
-                        if (geometry.attributes.color) {
-                            material.vertexColors = true;
-                            console.log('使用顶点颜色');
+                    // 使用 setTimeout 让UI有时间更新
+                    setTimeout(() => {
+                        try {
+                            geometry.computeVertexNormals();
+                            console.log('顶点数:', geometry.attributes.position.count);
+
+                            // 创建材质 - 使用更亮的材质
+                            const material = new THREE.MeshPhongMaterial({
+                                color: 0xf0f0f0,
+                                flatShading: false,
+                                side: THREE.DoubleSide,
+                                shininess: 50,
+                                emissive: 0x211111  // 添加自发光
+                            });
+
+                            // 如果 PLY 文件包含颜色信息，使用顶点颜色
+                            if (geometry.attributes.color) {
+                                material.vertexColors = true;
+                                console.log('使用顶点颜色');
+                            }
+
+                            // 创建网格
+                            const mesh = new THREE.Mesh(geometry, material);
+
+                            // 居中模型
+                            geometry.computeBoundingBox();
+                            const boundingBox = geometry.boundingBox;
+                            const center = new THREE.Vector3();
+                            boundingBox.getCenter(center);
+                            mesh.position.sub(center);
+
+                            scene.add(mesh);
+                            console.log('模型已添加到场景');
+
+                            // 调整相机位置以适应模型
+                            const size = boundingBox.getSize(new THREE.Vector3());
+                            const maxDim = Math.max(size.x, size.y, size.z);
+                            const fov = camera.fov * (Math.PI / 180);
+                            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+                            cameraZ *= 1.5; // 稍微远一点
+
+                            camera.position.set(cameraZ, cameraZ * 0.8, cameraZ);
+                            camera.lookAt(0, 0, 0);
+                            controls.target.set(0, 0, 0);
+                            controls.update();
+
+                            console.log('模型尺寸:', size);
+                            console.log('相机位置:', camera.position);
+
+                            // 隐藏加载提示，显示控制提示
+                            loadingOverlay.style.display = 'none';
+                            viewerControls.style.display = 'block';
+
+                            // 移除网格辅助线
+                            scene.remove(gridHelper);
+
+                        } catch (error) {
+                            console.error('处理模型时出错:', error);
+                            loadingText.textContent = '处理模型失败';
+                            loadingProgress.textContent = error.message;
                         }
+                    }, 100);
+                },
+                function (xhr) {
+                    const percentComplete = xhr.total > 0 ? (xhr.loaded / xhr.total * 100) : 0;
+                    loadingProgress.textContent = `已加载: ${(xhr.loaded / 1024 / 1024).toFixed(1)} MB / ${(xhr.total / 1024 / 1024).toFixed(1)} MB (${Math.round(percentComplete)}%)`;
+                    console.log(`加载进度: ${percentComplete.toFixed(2)}%`);
+                },
+                function (error) {
+                    console.error('加载 PLY 文件时出错:', error);
+                    loadingText.textContent = '加载失败！';
+                    loadingProgress.textContent = '无法加载 ./ply/shapan.ply';
+                    loadingProgress.innerHTML += '<br>请检查文件路径是否正确';
+                }
+            );
+        }
 
-                        // 创建网格
-                        const mesh = new THREE.Mesh(geometry, material);
-
-                        // 居中模型
-                        geometry.computeBoundingBox();
-                        const boundingBox = geometry.boundingBox;
-                        const center = new THREE.Vector3();
-                        boundingBox.getCenter(center);
-                        mesh.position.sub(center);
-
-                        scene.add(mesh);
-                        console.log('模型已添加到场景');
-
-                        // 调整相机位置以适应模型
-                        const size = boundingBox.getSize(new THREE.Vector3());
-                        const maxDim = Math.max(size.x, size.y, size.z);
-                        const fov = camera.fov * (Math.PI / 180);
-                        let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-                        cameraZ *= 1.5; // 稍微远一点
-
-                        camera.position.set(cameraZ, cameraZ * 0.8, cameraZ);
-                        camera.lookAt(0, 0, 0);
-                        controls.target.set(0, 0, 0);
-                        controls.update();
-
-                        console.log('模型尺寸:', size);
-                        console.log('相机位置:', camera.position);
-
-                        // 隐藏加载提示，显示控制提示
-                        loadingOverlay.style.display = 'none';
-                        viewerControls.style.display = 'block';
-
-                        // 移除网格辅助线
-                        scene.remove(gridHelper);
-
-                    } catch (error) {
-                        console.error('处理模型时出错:', error);
-                        loadingText.textContent = '处理模型失败';
-                        loadingProgress.textContent = error.message;
-                    }
-                }, 100);
-            },
-            function (xhr) {
-                const percentComplete = xhr.total > 0 ? (xhr.loaded / xhr.total * 100) : 0;
-                loadingProgress.textContent = `已加载: ${(xhr.loaded / 1024 / 1024).toFixed(1)} MB / ${(xhr.total / 1024 / 1024).toFixed(1)} MB (${Math.round(percentComplete)}%)`;
-                console.log(`加载进度: ${percentComplete.toFixed(2)}%`);
-            },
-            function (error) {
-                console.error('加载 PLY 文件时出错:', error);
-                loadingText.textContent = '加载失败！';
-                loadingProgress.textContent = '无法加载 ./ply/shapan.ply';
-                loadingProgress.innerHTML += '<br>请检查文件路径是否正确';
-            }
-        );
+        // 点击封面事件
+        viewerCover.addEventListener('click', function() {
+            // 隐藏封面
+            viewerCover.classList.add('hidden');
+            // 显示加载提示
+            loadingOverlay.style.display = 'flex';
+            // 开始加载模型
+            loadModel();
+        });
 
         // 动画循环
         function animate() {
