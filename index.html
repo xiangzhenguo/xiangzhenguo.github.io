@@ -314,12 +314,12 @@
         <header class="header-section">
             <div class="header-info">
                 <h1>郭祥振 <span>Guo Xiangzhen</span></h1>
-                <div class="subtitle">专注于 3D 场景重建 | 自动驾驶 </div>
+                <div class="subtitle">专注于 3D 场景重建 | 场景感知 </div>
                 
                 <div class="contact-info">
                     <p><strong>东北大学 (985)</strong> | 二年级硕士研究生</p>
                     <p><strong>导师：</strong><a href="http://faculty.neu.edu.cn/ise/zhangyunzhou" target="_blank">张云洲 教授</a></p>
-                    <p><strong>微信：</strong>g15225930423</p>
+                    <p><strong>微信：</strong>gxz15225967402</p>
                     <p><strong>邮箱：</strong>2429312850@qq.com</p>
                 </div>
             </div>
@@ -332,7 +332,7 @@
         <section class="content-section">
             <div class="section-title">个人简介 (Biography)</div>
             <p>
-                我是郭祥振。本科毕业于东北大学测控技术与仪器专业，目前在东北大学攻读控制科学与工程硕士学位。
+                我是郭祥振。本科毕业于东北大学<strong>测控技术与仪器专业</strong>，目前在东北大学攻读<strong>控制科学与工程</strong>硕士学位。
             </p>
             <p>
                 我的研究兴趣主要集中在 <strong>3D 计算机视觉</strong> 和 <strong>场景感知算法</strong>。
@@ -340,7 +340,7 @@
                 并探索如何将这些环境表征应用于 <strong>自动驾驶</strong> 和 <strong>机器人仿真</strong> 中，使机器人能够像人类一样理解并与复杂的物理世界交互。
             </p>
             <p>
-                近期，我也在探索 <strong>端到端自动驾驶</strong> 中的世界模型与 VLA (Vision-Language-Action) 算法。
+                近期，我也在探索 <strong>端到端自动驾驶</strong> 中的 VLA (Vision-Language-Action) 算法。
             </p>
         </section>
 
@@ -604,7 +604,7 @@
                 function (xhr) {
                     const percentComplete = xhr.total > 0 ? (xhr.loaded / xhr.total * 100) : 0;
                     loadingProgress.textContent = `已加载: ${(xhr.loaded / 1024 / 1024).toFixed(1)} MB / ${(xhr.total / 1024 / 1024).toFixed(1)} MB (${Math.round(percentComplete)}%)`;
-                    console.log(`加载进度: ${percentComplete.toFixed(2)}%`);
+                    console.log(`加载进度: ${percentComplete.toFixed(1)}%`);
                 },
                 function (error) {
                     console.error('加载 PLY 文件时出错:', error);
